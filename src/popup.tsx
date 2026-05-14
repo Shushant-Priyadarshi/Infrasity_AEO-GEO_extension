@@ -48,20 +48,25 @@ export default function Popup() {
   }
 
   return (
-    <div className="w-[400px] h-[500px] bg-zinc-50 overflow-hidden flex flex-col">
-      <Header />
+  <div className="w-[400px] h-[500px] bg-[#050816] overflow-hidden flex flex-col text-white">
+    <Header />
 
-      <NavigationBar />
+    <NavigationBar />
 
-      <div className="flex-1 overflow-y-auto p-5">
-        {loading ? (
-          <div className="h-full flex items-center justify-center">
-            <div className="h-10 w-10 rounded-full border-2 border-zinc-200 border-t-zinc-900 animate-spin" />
-          </div>
-        ) : (
-          renderPage()
-        )}
-      </div>
+    <div className="flex-1 overflow-y-auto p-5 bg-[radial-gradient(circle_at_top,rgba(88,28,135,0.25),transparent_40%)]">
+      {loading ? (
+        <div className="h-full flex flex-col items-center justify-center gap-4">
+          <div className="h-10 w-10 rounded-full border-2 border-white/10 border-t-[#7C5CFF] animate-spin" />
+
+          <p className="text-sm text-zinc-500">
+            Scanning current page...
+          </p>
+        </div>
+      ) : (
+        renderPage()
+      )}
     </div>
-  )
+  </div>
+)
+  
 }

@@ -8,17 +8,21 @@ export default function StatRow({
   const isBoolean = typeof value === "boolean"
 
   return (
-    <div className="flex items-center justify-between text-sm">
-      <p className="text-zinc-500">{label}</p>
+    <div className="flex items-center justify-between py-3 border-b border-white/5 last:border-none">
+      <p className="text-sm text-zinc-400">
+        {label}
+      </p>
 
       {isBoolean ? (
         <div
-          className={`h-2 w-2 rounded-full ${
-            value ? "bg-emerald-500" : "bg-zinc-300"
+          className={`h-2.5 w-2.5 rounded-full ${
+            value
+              ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
+              : "bg-zinc-600"
           }`}
         />
       ) : (
-        <p className="font-medium text-zinc-900">
+        <p className="text-sm font-medium text-white">
           {value}
         </p>
       )}

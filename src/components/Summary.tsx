@@ -20,8 +20,8 @@ export default function Summary() {
     if (audit.aeo.faqCount > 0) aeo += 4
     if (audit.aeo.questionH2Count > 0) aeo += 4
     if (audit.aeo.answerBlocks > 0) aeo += 4
-    if (audit.aeo.hasOgTitle) aeo += 4
-    if (audit.aeo.hasOgDescription) aeo += 2
+    if (audit.aeo.ogTitle.exists) aeo += 4
+    if (audit.aeo.ogDescription.exists) aeo += 2
     if (audit.aeo.hasFAQSchema) aeo += 2
 
     return {
@@ -32,17 +32,17 @@ export default function Summary() {
   }, [audit])
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Overall */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5">
+      <div className="bg-[#0B1120] border border-white/10 backdrop-blur-xl rounded-3xl p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs text-zinc-500 mb-2">
+            <p className="text-xs text-zinc-400 mb-2">
               Overall Score
             </p>
 
             <div className="flex items-end gap-1">
-              <h2 className="text-4xl font-semibold tracking-tight">
+            <h2 className="text-5xl font-semibold tracking-tight text-white">
                 {score.overall}
               </h2>
 
@@ -71,9 +71,9 @@ export default function Summary() {
            </div>
 
       {/* Metadata */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5 space-y-4">
+      <div className="bg-[#0B1120] border border-white/10 backdrop-blur-xl rounded-3xl p-5 space-y-4">
         <div>
-          <p className="text-xs text-zinc-500 mb-1">
+          <p className="text-xs text-zinc-400 mb-1">
             Title
           </p>
 
@@ -83,11 +83,11 @@ export default function Summary() {
         </div>
 
         <div>
-          <p className="text-xs text-zinc-500 mb-1">
+          <p className="text-xs text-zinc-400 mb-1">
             Description
           </p>
 
-          <p className="text-sm text-zinc-700 leading-6">
+          <p className="text-sm text-zinc-300 leading-6">
             {audit.metadata.description ||
               "No meta description found"}
           </p>
@@ -116,7 +116,7 @@ export default function Summary() {
       </div>
 
       {/* Social Links */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5">
+      <div className="bg-[#0B1120] border border-white/10 backdrop-blur-xl rounded-3xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold">
             Social Links
@@ -140,7 +140,7 @@ export default function Summary() {
             ))
           ) : (
 
-             <p className="text-sm text-zinc-500">
+             <p className="text-sm text-zinc-400">
               No social links detected
             </p>
           )}
@@ -148,7 +148,7 @@ export default function Summary() {
       </div>
 
       {/* Images */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5">
+      <div className="bg-[#0B1120] border border-white/10 backdrop-blur-xl rounded-3xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold">
             Images
@@ -165,7 +165,7 @@ export default function Summary() {
               key={img}
               href={img}
               target="_blank"
-              className="aspect-square rounded-xl overflow-hidden border border-zinc-200 bg-zinc-100">
+              className="aspect-square rounded-xl overflow-hidden border border-white/10 bg-zinc-100">
               <img
                 src={img}
                 className="w-full h-full object-cover"
@@ -176,7 +176,7 @@ export default function Summary() {
       </div>
 
  {/* Links */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5">
+      <div className="bg-[#0B1120] border border-white/10 backdrop-blur-xl rounded-3xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold">
             Internal Links
@@ -193,7 +193,7 @@ export default function Summary() {
               key={link}
               href={link}
               target="_blank"
-              className="block text-xs text-zinc-700 break-all hover:text-black">
+              className="block text-xs text-zinc-300 break-all hover:text-white">
               {link}
             </a>
           ))}
@@ -212,8 +212,8 @@ function MiniCard({
   value: string
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 px-3 py-3">
-      <p className="text-[11px] text-zinc-500 mb-1">
+   <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-4">
+      <p className="text-[11px] text-zinc-400 mb-1">
         {title}
       </p>
 
@@ -232,8 +232,8 @@ function MetaCard({
   value: string
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-3">
-      <p className="text-[11px] text-zinc-500 mb-1">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+      <p className="text-[11px] text-zinc-400 mb-1">
         {label}
       </p>
 

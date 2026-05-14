@@ -9,50 +9,82 @@ export default function GEO() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white border border-zinc-200 rounded-3xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold">
-          AI Crawler Access
-        </h2>
+      <div className="bg-[#0B1120] border border-white/10 rounded-3xl p-5">
+        <div className="mb-5">
+          <h2 className="text-sm font-semibold text-white">
+            AI Crawler Access
+          </h2>
 
-        <StatRow
-          label="GPTBot"
-          value={audit.geo.aiCrawlerAccess.GPTBot}
-        />
+          <p className="text-xs text-zinc-500 mt-1">
+            AI crawler permissions from robots.txt
+          </p>
+        </div>
 
-        <StatRow
-          label="ClaudeBot"
-          value={audit.geo.aiCrawlerAccess.ClaudeBot}
-        />
+        <div className="space-y-1">
+          <StatRow
+            label="GPTBot"
+            value={audit.geo.aiCrawlerAccess.GPTBot}
+          />
 
-        <StatRow
-          label="Google Extended"
-          value={audit.geo.aiCrawlerAccess.GoogleExtended}
-        />
+          <StatRow
+            label="ClaudeBot"
+            value={audit.geo.aiCrawlerAccess.ClaudeBot}
+          />
 
-        <StatRow
-          label="PerplexityBot"
-          value={audit.geo.aiCrawlerAccess.PerplexityBot}
-        />
+          <StatRow
+            label="Google Extended"
+            value={
+              audit.geo.aiCrawlerAccess
+                .GoogleExtended
+            }
+          />
+
+          <StatRow
+            label="PerplexityBot"
+            value={
+              audit.geo.aiCrawlerAccess
+                .PerplexityBot
+            }
+          />
+        </div>
       </div>
-       <div className="bg-white border border-zinc-200 rounded-3xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold">
-          Content Extractibility
-        </h2>
 
-        <StatRow
-          label="H1 Count"
-          value={audit.geo.ContentExtractibilty.h1Count}
-        />
+      <div className="bg-[#0B1120] border border-white/10 rounded-3xl p-5">
+        <div className="mb-5">
+          <h2 className="text-sm font-semibold text-white">
+            Content Extractibility
+          </h2>
 
-        <StatRow
-          label="Lists"
-          value={audit.geo.ContentExtractibilty.listCount}
-        />
+          <p className="text-xs text-zinc-500 mt-1">
+            Structure quality for AI parsing
+          </p>
+        </div>
 
-        <StatRow
-          label="Tables"
-          value={audit.geo.ContentExtractibilty.tableCount}
-        />
+        <div className="space-y-1">
+          <StatRow
+            label="H1 Count"
+            value={
+              audit.geo.ContentExtractibilty
+                .h1Count
+            }
+          />
+
+          <StatRow
+            label="Lists"
+            value={
+              audit.geo.ContentExtractibilty
+                .listCount
+            }
+          />
+
+          <StatRow
+            label="Tables"
+            value={
+              audit.geo.ContentExtractibilty
+                .tableCount
+            }
+          />
+        </div>
       </div>
     </div>
   )

@@ -39,18 +39,17 @@ export function scanAEO() {
     }
   })
 
+  const ogTitleValue =
+    document
+      .querySelector('meta[property="og:title"]')
+      ?.getAttribute("content") || ""
 
-  const hasOgTitle = Boolean(
-    document.querySelector(
-      'meta[property="og:title"]'
-    )
-  )
-
-  const hasOgDescription = Boolean(
-    document.querySelector(
-      'meta[property="og:description"]'
-    )
-  )
+  const ogDescriptionValue =
+    document
+      .querySelector(
+        'meta[property="og:description"]'
+      )
+      ?.getAttribute("content") || ""
 
   const schemaScripts = Array.from(
     document.querySelectorAll(
@@ -68,14 +67,16 @@ export function scanAEO() {
 
       const asString = JSON.stringify(json)
 
-      if (asString.includes("FAQPage") || asString.includes("FAQ")) {
+      if (
+        asString.includes("FAQPage") ||
+        asString.includes("FAQ")
+      ) {
         hasFAQSchema = true
       }
     } catch {}
   })
 
   let clearValuePurpose = 0
-
 
   const firstParagraphs = Array.from(
     document.querySelectorAll("p")
@@ -106,8 +107,17 @@ export function scanAEO() {
     questionH2Count,
     clearValuePurpose,
     answerBlocks,
-    hasOgTitle,
-    hasOgDescription,
+
+    ogTitle: {
+      exists: Boolean(ogTitleValue),
+      value: ogTitleValue
+    },
+
+    ogDescription: {
+      exists: Boolean(ogDescriptionValue),
+      value: ogDescriptionValue
+    },
+
     hasFAQSchema
   }
 }
