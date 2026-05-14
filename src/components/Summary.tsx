@@ -99,8 +99,7 @@ function detectSocial(url: string): {
   const u = url.toLowerCase()
   if (u.includes("twitter.com") || u.includes("x.com"))
     return { name: "Twitter / X", Icon: FiTwitter }
-  if (u.includes("linkedin.com"))
-    return { name: "LinkedIn", Icon: FiLinkedin }
+  if (u.includes("linkedin.com")) return { name: "LinkedIn", Icon: FiLinkedin }
   if (u.includes("github.com")) return { name: "GitHub", Icon: FiGithub }
   if (u.includes("instagram.com"))
     return { name: "Instagram", Icon: FiInstagram }
@@ -158,10 +157,7 @@ export default function Summary() {
                 alt=""
               />
             ) : (
-              <FiGlobe
-                className="h-5 w-5 text-ink-300"
-                strokeWidth={1.5}
-              />
+              <FiGlobe className="h-5 w-5 text-ink-300" strokeWidth={1.5} />
             )}
           </div>
 
@@ -190,7 +186,6 @@ export default function Summary() {
             <FiCopy className="h-3.5 w-3.5" strokeWidth={2.25} />
           </button>
         </div>
-        
 
         {copied && (
           <motion.span
@@ -219,10 +214,7 @@ export default function Summary() {
             No title tag found
           </p>
         )}
-        <LengthIndicator
-          value={titleVal.length}
-          range={{ min: 50, max: 60 }}
-        />
+        <LengthIndicator value={titleVal.length} range={{ min: 50, max: 60 }} />
       </motion.div>
 
       {/* Description hero */}
@@ -247,16 +239,38 @@ export default function Summary() {
         />
       </motion.div>
 
+      {/* OG Preview */}
+      <StatCard
+        label="OG Title"
+        value={audit.metadata.openGraph.title}
+        needChars={false}
+      />
+      <StatCard
+        label="OG Description"
+        value={audit.metadata.openGraph.description}
+        needChars={false}
+      />
+
+      {/* Secondary meta grid */}
+      <motion.div variants={staggerItem} className="grid grid-cols-2 gap-2.5">
+        <StatCard
+          label="Canonical"
+          value={audit.metadata.canonical}
+          needChars={false}
+        />
+
+        <StatCard
+          label="Robots Tag"
+          value={audit.metadata.metaRobots}
+          needChars={false}
+        />
+      </motion.div>
+
       {/* Brand + Pricing */}
-      <motion.div
-        variants={staggerItem}
-        className="grid grid-cols-2 gap-2.5">
+      <motion.div variants={staggerItem} className="grid grid-cols-2 gap-2.5">
         <div className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
           <div className="flex items-center gap-1.5 mb-2">
-            <FiHash
-              className="h-3 w-3 text-ink-300"
-              strokeWidth={2.25}
-            />
+            <FiHash className="h-3 w-3 text-ink-300" strokeWidth={2.25} />
             <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
               Brand Mentions
             </p>
@@ -284,10 +298,7 @@ export default function Summary() {
 
         <div className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
           <div className="flex items-center gap-1.5 mb-2">
-            <FiTag
-              className="h-3 w-3 text-ink-300"
-              strokeWidth={2.25}
-            />
+            <FiTag className="h-3 w-3 text-ink-300" strokeWidth={2.25} />
             <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
               Pricing Page
             </p>
@@ -313,22 +324,18 @@ export default function Summary() {
             <p
               className="mt-2 text-[10px] font-mono text-ink-400 truncate"
               title={audit.visibility.pricingLink.url}>
-              {audit.visibility.pricingLink.url.replace(
-                /^https?:\/\//,
-                ""
-              )}
+              {audit.visibility.pricingLink.url.replace(/^https?:\/\//, "")}
             </p>
           )}
         </div>
       </motion.div>
 
-      {/* OG Preview */}
+      
+
       <motion.div variants={staggerItem}>
         <OpenGraphPreview
           title={
-            audit.metadata.openGraph.title ||
-            audit.aeo.ogTitle.value ||
-            ""
+            audit.metadata.openGraph.title || audit.aeo.ogTitle.value || ""
           }
           description={
             audit.metadata.openGraph.description ||
@@ -337,42 +344,6 @@ export default function Summary() {
           }
           image={audit.metadata.openGraph.image || ""}
           host={host}
-        />
-      </motion.div>
-
-      {/* Secondary meta grid */}
-      <motion.div
-        variants={staggerItem}
-        className="grid grid-cols-2 gap-2.5">
-        <StatCard
-          label="Canonical"
-          value={audit.metadata.canonical}
-          needChars={false}
-        />
-        <StatCard
-          label="Author"
-          value={audit.metadata.author}
-          needChars={false}
-        />
-        <StatCard
-          label="Publisher"
-          value={audit.metadata.publisher}
-          needChars={false}
-        />
-        <StatCard
-          label="Robots Tag"
-          value={audit.metadata.metaRobots}
-          needChars={false}
-        />
-        <StatCard
-          label="Viewport"
-          value={audit.metadata.viewport}
-          needChars={false}
-        />
-        <StatCard
-          label="Charset"
-          value={audit.metadata.charset}
-          needChars={false}
         />
       </motion.div>
 

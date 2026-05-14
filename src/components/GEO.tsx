@@ -12,13 +12,7 @@ import HeadingsBar from "./HeadingsBar"
 import NumberedList from "./NumberedList"
 import SectionHeader from "./SectionHeader"
 
-function ReadinessTile({
-  name,
-  exists
-}: {
-  name: string
-  exists: boolean
-}) {
+function ReadinessTile({ name, exists }: { name: string; exists: boolean }) {
   return (
     <div
       className={`rounded-xl border px-3 py-3 flex items-center gap-2.5 transition-colors duration-200 ease-swift ${
@@ -38,9 +32,7 @@ function ReadinessTile({
           <FiX className="h-3 w-3" strokeWidth={3.25} />
         )}
       </span>
-      <p className="text-[11.5px] font-mono text-ink-700 ">
-        {name}
-      </p>
+      <p className="text-[11.5px] font-mono text-ink-700 ">{name}</p>
     </div>
   )
 }
@@ -91,10 +83,7 @@ export default function GEO() {
               name="robots.txt"
               exists={audit.geo.robotsTxt.exists}
             />
-            <ReadinessTile
-              name="llms.txt"
-              exists={audit.geo.llmsTxt.exists}
-            />
+            <ReadinessTile name="llms.txt" exists={audit.geo.llmsTxt.exists} />
             <ReadinessTile
               name="sitemap.xml"
               exists={audit.geo.sitemapXml.exists}
@@ -179,18 +168,86 @@ export default function GEO() {
       </motion.div>
 
       {/* Paragraphs */}
-      {audit.visibility.contentBlocks.paragraphs.length > 0 && (
-        <motion.div variants={staggerItem}>
-          <Collapse
-            title="Paragraphs"
-            count={audit.visibility.contentBlocks.paragraphCount}>
-            <NumberedList items={audit.visibility.contentBlocks.paragraphs} />
-          </Collapse>
-        </motion.div>
-      )}
+      {/* Paragraphs */}
+      {audit.visibility.contentBlocks.paragraphs.length > 0 &&
+        (() => {
+          const paragraphs = audit.visibility.contentBlocks.paragraphs
+
+          const shortParas = paragraphs.filter((p) => p.length <= 100)
+
+          const longParas = paragraphs.filter((p) => p.length > 200)
+
+          return (
+            <motion.div variants={staggerItem}>
+              {" "}
+              <div className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
+                {" "}
+                <div className="flex items-start justify-between gap-4">
+                  {" "}
+                  <div>
+                    {" "}
+                    <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
+                      Paragraph Analysis{" "}
+                    </p>
+                    <h3 className="mt-1 text-[14px] font-semibold text-ink-900">
+                      Content Readability
+                    </h3>
+                    <p className="mt-1 text-[11.5px] leading-5 text-ink-400 max-w-[240px]">
+                      AI systems generally prefer concise paragraphs. Ideal
+                      paragraph size is around 100 characters.
+                    </p>
+                  </div>
+                  <div className="rounded-full border border-line bg-surface-sunken px-2.5 py-1 text-[10.5px] font-medium tabular text-ink-500 shrink-0">
+                    {paragraphs.length} total
+                  </div>
+                </div>
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <div className="rounded-xl border border-line-soft bg-surface-muted/40 p-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] uppercase tracking-eyebrow text-ink-300">
+                        Short Paras
+                      </p>
+
+                      {/* <div className="h-2 w-2 rounded-full bg-success" /> */}
+                    </div>
+
+                    <p className="mt-2 text-[18px] font-semibold tabular text-ink-900 leading-none">
+                      {shortParas.length}
+                    </p>
+
+                    <p className="mt-1 text-[11px] text-ink-400">≤ 100 chars</p>
+                  </div>
+
+                  <div className="rounded-xl border border-line-soft bg-surface-muted/40 p-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] uppercase tracking-eyebrow text-ink-300">
+                        Long Paras
+                      </p>
+
+                      <div className="h-2 w-2 rounded-full bg-warning" />
+                    </div>
+
+                    <p className="mt-2 text-[18px] font-semibold tabular text-ink-900 leading-none">
+                      {longParas.length}
+                    </p>
+
+                    <p className="mt-1 text-[11px] text-ink-400">200+ chars</p>
+                  </div>
+                </div>
+                {/* Expand */}
+                {/* <div className="mt-4">
+                  <Collapse title="View Paragraphs" count={paragraphs.length}>
+                    <NumberedList items={paragraphs} />
+                  </Collapse>
+                </div> */}
+              </div>
+            </motion.div>
+          )
+        })()}
 
       {/* Bullet points */}
-      {audit.visibility.contentBlocks.bullets.length > 0 && (
+      {/* {audit.visibility.contentBlocks.bullets.length > 0 && (
         <motion.div variants={staggerItem}>
           <Collapse
             title="Bullet Points"
@@ -198,7 +255,7 @@ export default function GEO() {
             <NumberedList items={audit.visibility.contentBlocks.bullets} />
           </Collapse>
         </motion.div>
-      )}
+      )} */}
 
       {/* robots.txt content */}
       <motion.div variants={staggerItem}>
@@ -217,10 +274,7 @@ export default function GEO() {
       {/* llms.txt content */}
       {audit.geo.llmsTxt.exists && audit.geo.llmsTxt.content && (
         <motion.div variants={staggerItem}>
-          <Collapse
-            title="llms.txt"
-            active={true}
-            variant="code">
+          <Collapse title="llms.txt" active={true} variant="code">
             {audit.geo.llmsTxt.content}
           </Collapse>
         </motion.div>
@@ -299,9 +353,7 @@ export default function GEO() {
               <button
                 onClick={() => setShowAllImages((v) => !v)}
                 className="mt-3 w-full rounded-lg border border-line bg-surface-raised py-2 text-[11px] font-medium text-ink-500 hover:text-ink-900 hover:border-line-strong transition-colors duration-200 ease-swift">
-                {showAllImages
-                  ? "Show fewer"
-                  : `Show all (${images.length})`}
+                {showAllImages ? "Show fewer" : `Show all (${images.length})`}
               </button>
             )}
           </>

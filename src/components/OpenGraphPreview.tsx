@@ -36,7 +36,7 @@ export default function OpenGraphPreview({
     <div className="rounded-2xl border border-line bg-surface-raised shadow-card overflow-hidden">
       <div className="px-4 pt-4 pb-3">
         <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
-          Twitter Card Preview
+          Open Graph Details
         </p>
       </div>
 

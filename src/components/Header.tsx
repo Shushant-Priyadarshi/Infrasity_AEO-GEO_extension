@@ -53,7 +53,7 @@ export default function Header() {
           </span>
 
           <span className="text-[12px] uppercase tracking-eyebrow font-semibold text-ink-900">
-            Boomers
+            Infrasity
           </span>
 
           <span className="h-3 w-px bg-line-strong/70" aria-hidden />
