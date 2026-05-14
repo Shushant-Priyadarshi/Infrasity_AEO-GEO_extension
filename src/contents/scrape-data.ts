@@ -28,7 +28,6 @@ async function runAudit(): Promise<RawAudit> {
 
 async function sendAudit() {
   const result = await runAudit()
-  console.log(result);
   
 
   await sendToBackground({

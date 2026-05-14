@@ -1,5 +1,4 @@
-import { FaRegCheckCircle } from "react-icons/fa"
-import { RxCrossCircled } from "react-icons/rx";
+import { FiCheck, FiX } from "react-icons/fi"
 
 export default function StatRow({
   label,
@@ -8,25 +7,27 @@ export default function StatRow({
   label: string
   value: any
 }) {
-  const isBoolean =
-    typeof value === "boolean"
+  const isBoolean = typeof value === "boolean"
 
   return (
-    <div className="flex items-center justify-between py-4 border-b border-[#F0F0EB] last:border-none">
-      <p className="text-sm text-[#52524D]">
-        {label}
-      </p>
+    <div className="-mx-2 flex items-center justify-between rounded-lg px-2 py-2.5 transition-colors duration-150 ease-swift hover:bg-surface-muted/70">
+      <p className="text-[13px] text-ink-500">{label}</p>
 
       {isBoolean ? (
-        <div className="flex items-center">
+        <span
+          className={`flex h-6 w-6 items-center justify-center rounded-full ring-1 ${
+            value
+              ? "bg-success-soft text-success ring-success/15"
+              : "bg-danger-soft text-danger ring-danger/15"
+          }`}>
           {value ? (
-            <FaRegCheckCircle className="text-[18px] text-emerald-500" />
+            <FiCheck className="h-3.5 w-3.5" strokeWidth={3} />
           ) : (
-            <RxCrossCircled className="text-[18px] text-red-500" />
+            <FiX className="h-3.5 w-3.5" strokeWidth={3} />
           )}
-        </div>
+        </span>
       ) : (
-        <p className="text-sm font-semibold text-[#111111]">
+        <p className="text-[13px] font-semibold tabular text-ink-900">
           {value}
         </p>
       )}

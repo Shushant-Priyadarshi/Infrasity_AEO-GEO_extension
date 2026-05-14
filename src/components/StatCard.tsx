@@ -1,5 +1,4 @@
-import { FaRegCheckCircle } from "react-icons/fa"
-import { RxCrossCircled } from "react-icons/rx";
+import { FiCheck, FiX } from "react-icons/fi"
 
 export default function StatCard({
   label,
@@ -10,32 +9,58 @@ export default function StatCard({
   value: any
   needChars: boolean
 }) {
-  const isBoolean =
-    typeof value === "boolean"
+  const isBoolean = typeof value === "boolean"
+  const isNumber = typeof value === "number"
+  const isEmpty =
+    !isBoolean && !isNumber && (value === undefined || value === null || value === "")
 
   return (
-    <div className="rounded-3xl border border-[#E6E6E0] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-      <p className="text-[11px] uppercase tracking-[0.15em] text-[#8B8B84]">
+    <div className="group rounded-2xl border border-line bg-surface-raised p-4 shadow-card transition-colors duration-200 ease-swift hover:border-line-strong">
+      <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
         {label}
       </p>
 
       {isBoolean ? (
-        <div className="mt-4">
-          {value ? (
-            <FaRegCheckCircle className="text-[20px] text-emerald-500" />
-          ) : (
-            <RxCrossCircled className="text-[20px] text-red-500" />
-          )}
+        <div className="mt-3 flex items-center gap-2">
+          <span
+            className={`flex h-6 w-6 items-center justify-center rounded-full ring-1 ${
+              value
+                ? "bg-success-soft text-success ring-success/15"
+                : "bg-danger-soft text-danger ring-danger/15"
+            }`}>
+            {value ? (
+              <FiCheck className="h-3.5 w-3.5" strokeWidth={3} />
+            ) : (
+              <FiX className="h-3.5 w-3.5" strokeWidth={3} />
+            )}
+          </span>
+
+          <span
+            className={`text-[10.5px] uppercase tracking-eyebrow font-medium ${
+              value ? "text-success" : "text-danger"
+            }`}>
+            {value ? "Present" : "Missing"}
+          </span>
         </div>
+      ) : isNumber ? (
+        <p className="mt-2 text-[22px] font-semibold tracking-tight tabular text-ink-900 leading-none">
+          {value}
+        </p>
       ) : (
         <>
-          <p className="mt-3 text-[12px] leading-6 text-[#111111] break-words">
-            {value || "Not Found"}
-          </p>
+          {isEmpty ? (
+            <p className="mt-2.5 text-[12px] italic text-ink-300 leading-5">
+              Not set
+            </p>
+          ) : (
+            <p className="mt-2.5 text-[12px] leading-5 text-ink-700 break-words">
+              {value}
+            </p>
+          )}
 
-          {needChars && (
-            <p className="mt-2 text-[11px] text-[#8B8B84]">
-              {value?.length || 0} chars
+          {needChars && !isEmpty && (
+            <p className="mt-2 text-[10.5px] tabular text-ink-300">
+              {String(value).length} chars
             </p>
           )}
         </>
