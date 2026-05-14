@@ -5,9 +5,11 @@ import { FiCheck, FiImage, FiX } from "react-icons/fi"
 import { stagger, staggerItem } from "~src/lib/motion"
 import { useAuditStore } from "~src/store/auditStore"
 
+import Breadcrumbs from "./Breadcrumbs"
 import Collapse from "./Collapse"
 import CrawlerAccess from "./CrawlerAccess"
 import HeadingsBar from "./HeadingsBar"
+import NumberedList from "./NumberedList"
 import SectionHeader from "./SectionHeader"
 
 function ReadinessTile({
@@ -108,29 +110,59 @@ export default function GEO() {
 
       {/* Headings hierarchy */}
       <motion.div variants={staggerItem}>
-        <HeadingsBar counts={audit.geo.ContentExtractibilty} />
+        <HeadingsBar
+          counts={audit.geo.ContentExtractibilty}
+          hierarchy={audit.visibility.headingHierarchy}
+        />
       </motion.div>
 
-      {/* Content structure stats */}
+      {/* Breadcrumbs */}
+      <motion.div variants={staggerItem}>
+        <Breadcrumbs data={audit.visibility.breadcrumbs} />
+      </motion.div>
+
+      {/* Content Blocks */}
       <motion.div
         variants={staggerItem}
         className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
         <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium mb-3">
-          Content Structure
+          Content Blocks
         </p>
-        <div className="grid grid-cols-2 gap-x-4">
-          <div className="-mx-2 flex items-center justify-between rounded-lg px-2 py-2 transition-colors hover:bg-surface-muted/70">
-            <p className="text-[12px] text-ink-500">Lists</p>
-            <p className="text-[12.5px] font-semibold tabular text-ink-900">
+        <div className="grid grid-cols-4 gap-2">
+          <div className="rounded-xl border border-line-soft bg-surface-muted/40 px-2.5 py-2.5">
+            <p className="text-[9.5px] uppercase tracking-eyebrow text-ink-300">
+              Paras
+            </p>
+            <p className="mt-1 text-[15px] font-semibold tabular text-ink-900 leading-none">
+              {audit.visibility.contentBlocks.paragraphCount}
+            </p>
+          </div>
+          <div className="rounded-xl border border-line-soft bg-surface-muted/40 px-2.5 py-2.5">
+            <p className="text-[9.5px] uppercase tracking-eyebrow text-ink-300">
+              Bullets
+            </p>
+            <p className="mt-1 text-[15px] font-semibold tabular text-ink-900 leading-none">
+              {audit.visibility.contentBlocks.bulletCount}
+            </p>
+          </div>
+          <div className="rounded-xl border border-line-soft bg-surface-muted/40 px-2.5 py-2.5">
+            <p className="text-[9.5px] uppercase tracking-eyebrow text-ink-300">
+              Lists
+            </p>
+            <p className="mt-1 text-[15px] font-semibold tabular text-ink-900 leading-none">
               {audit.geo.ContentExtractibilty.listCount}
             </p>
           </div>
-          <div className="-mx-2 flex items-center justify-between rounded-lg px-2 py-2 transition-colors hover:bg-surface-muted/70">
-            <p className="text-[12px] text-ink-500">Tables</p>
-            <p className="text-[12.5px] font-semibold tabular text-ink-900">
+          <div className="rounded-xl border border-line-soft bg-surface-muted/40 px-2.5 py-2.5">
+            <p className="text-[9.5px] uppercase tracking-eyebrow text-ink-300">
+              Tables
+            </p>
+            <p className="mt-1 text-[15px] font-semibold tabular text-ink-900 leading-none">
               {audit.geo.ContentExtractibilty.tableCount}
             </p>
           </div>
+        </div>
+        <div className="mt-3 pt-3 border-t border-line-whisper grid grid-cols-2 gap-x-4">
           <div className="-mx-2 flex items-center justify-between rounded-lg px-2 py-2 transition-colors hover:bg-surface-muted/70">
             <p className="text-[12px] text-ink-500">Words</p>
             <p className="text-[12.5px] font-semibold tabular text-ink-900">
@@ -145,6 +177,28 @@ export default function GEO() {
           </div>
         </div>
       </motion.div>
+
+      {/* Paragraphs */}
+      {audit.visibility.contentBlocks.paragraphs.length > 0 && (
+        <motion.div variants={staggerItem}>
+          <Collapse
+            title="Paragraphs"
+            count={audit.visibility.contentBlocks.paragraphCount}>
+            <NumberedList items={audit.visibility.contentBlocks.paragraphs} />
+          </Collapse>
+        </motion.div>
+      )}
+
+      {/* Bullet points */}
+      {audit.visibility.contentBlocks.bullets.length > 0 && (
+        <motion.div variants={staggerItem}>
+          <Collapse
+            title="Bullet Points"
+            count={audit.visibility.contentBlocks.bulletCount}>
+            <NumberedList items={audit.visibility.contentBlocks.bullets} />
+          </Collapse>
+        </motion.div>
+      )}
 
       {/* robots.txt content */}
       <motion.div variants={staggerItem}>

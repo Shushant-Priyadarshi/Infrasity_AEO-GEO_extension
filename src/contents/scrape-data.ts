@@ -7,6 +7,7 @@ import type { RawAudit } from "~src/types/audit"
 import { scanAEO } from "./aeo"
 import { scanGeo } from "./geo"
 import { scanMetadata } from "./metadata"
+import { scanVisibility } from "./visibility"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
@@ -22,7 +23,9 @@ async function runAudit(): Promise<RawAudit> {
 
     geo: await scanGeo(url),
 
-    aeo: scanAEO()
+    aeo: scanAEO(),
+
+    visibility: scanVisibility()
   }
 }
 

@@ -1,9 +1,13 @@
-export default function QuestionList({ items }: { items: string[] }) {
+export default function NumberedList({
+  items,
+  emptyLabel = "Nothing detected"
+}: {
+  items: string[]
+  emptyLabel?: string
+}) {
   if (!items?.length) {
     return (
-      <p className="text-[12px] italic text-ink-300">
-        No questions detected
-      </p>
+      <p className="text-[12px] italic text-ink-300">{emptyLabel}</p>
     )
   }
 

@@ -59,7 +59,7 @@ export type RawAudit = {
       AuthorName: string;
       PublishedDates: string;
       Statisticaldata: boolean;
-      ReserarchDate: boolean;
+      ResearchDate: boolean;
     };
 
     ContentExtractibilty: {
@@ -98,5 +98,58 @@ export type RawAudit = {
     };
 
     hasFAQSchema: boolean;
+  };
+
+  visibility: {
+    headingHierarchy: {
+      items: { level: number; text: string }[];
+      rating: "good" | "needs-work" | "broken";
+      issues: string[];
+    };
+
+    useCase: {
+      matches: {
+        type: "designed-for" | "ideal-for" | "for-audience";
+        text: string;
+      }[];
+    };
+
+    contentBlocks: {
+      bulletCount: number;
+      paragraphCount: number;
+      bullets: string[];
+      paragraphs: string[];
+    };
+
+    brand: {
+      name: string;
+      mentions: number;
+    };
+
+    pricingLink: {
+      exists: boolean;
+      url: string;
+      label: string;
+    };
+
+    serviceClarity: {
+      forWhom: { found: boolean; heading: string };
+      pricing: { found: boolean; heading: string };
+      workflow: { found: boolean; heading: string };
+      whyDifferent: { found: boolean; heading: string };
+    };
+
+    breadcrumbs: {
+      exists: boolean;
+      items: string[];
+      source: "aria" | "ol" | "json-ld" | "none";
+    };
+
+    freshness: {
+      date: string;
+      source: string;
+      daysOld: number;
+      rating: "fresh" | "recent" | "stale" | "outdated" | "unknown";
+    };
   };
 };

@@ -84,7 +84,10 @@ export async function scanGeo(url: string) {
     },
 
     CitationWortiness: {
-      AuthorName: "",
+      AuthorName:
+        document
+          .querySelector('meta[name="author"]')
+          ?.getAttribute("content") || "",
 
       PublishedDates:
         document
@@ -96,7 +99,7 @@ export async function scanGeo(url: string) {
       Statisticaldata:
         /\d+%/.test(bodyText),
 
-      ReserarchDate:
+      ResearchDate:
         bodyText.includes("research") ||
         bodyText.includes("study")
     },

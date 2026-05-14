@@ -3,12 +3,15 @@ import { useState } from "react"
 import type { IconType } from "react-icons"
 import {
   FiCopy,
+  FiExternalLink,
   FiFacebook,
   FiGithub,
   FiGlobe,
+  FiHash,
   FiInstagram,
   FiLink,
   FiLinkedin,
+  FiTag,
   FiTwitter,
   FiYoutube
 } from "react-icons/fi"
@@ -242,6 +245,81 @@ export default function Summary() {
           value={descVal.length}
           range={{ min: 150, max: 160 }}
         />
+      </motion.div>
+
+      {/* Brand + Pricing */}
+      <motion.div
+        variants={staggerItem}
+        className="grid grid-cols-2 gap-2.5">
+        <div className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
+          <div className="flex items-center gap-1.5 mb-2">
+            <FiHash
+              className="h-3 w-3 text-ink-300"
+              strokeWidth={2.25}
+            />
+            <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
+              Brand Mentions
+            </p>
+          </div>
+          {audit.visibility.brand.name ? (
+            <>
+              <p
+                title={audit.visibility.brand.name}
+                className="text-[13px] font-semibold text-ink-900 truncate">
+                {audit.visibility.brand.name}
+              </p>
+              <p className="mt-1 text-[20px] font-semibold tabular text-ink-900 leading-none">
+                {audit.visibility.brand.mentions}
+                <span className="ml-1 text-[10.5px] font-normal text-ink-300 tracking-wide">
+                  in body
+                </span>
+              </p>
+            </>
+          ) : (
+            <p className="text-[12px] italic text-ink-300">
+              Brand not detected
+            </p>
+          )}
+        </div>
+
+        <div className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
+          <div className="flex items-center gap-1.5 mb-2">
+            <FiTag
+              className="h-3 w-3 text-ink-300"
+              strokeWidth={2.25}
+            />
+            <p className="text-[10px] uppercase tracking-eyebrow text-ink-300 font-medium">
+              Pricing Page
+            </p>
+          </div>
+          {audit.visibility.pricingLink.exists ? (
+            <a
+              href={audit.visibility.pricingLink.url}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-start gap-1.5 text-[12.5px] text-ink-900 hover:text-ink-700 transition-colors">
+              <span className="font-medium leading-5 break-all line-clamp-2">
+                {audit.visibility.pricingLink.label || "Pricing"}
+              </span>
+              <FiExternalLink
+                className="h-3 w-3 mt-1 text-ink-300 shrink-0 group-hover:text-ink-700 transition-colors"
+                strokeWidth={2}
+              />
+            </a>
+          ) : (
+            <p className="text-[12px] italic text-ink-300">Not detected</p>
+          )}
+          {audit.visibility.pricingLink.exists && (
+            <p
+              className="mt-2 text-[10px] font-mono text-ink-400 truncate"
+              title={audit.visibility.pricingLink.url}>
+              {audit.visibility.pricingLink.url.replace(
+                /^https?:\/\//,
+                ""
+              )}
+            </p>
+          )}
+        </div>
       </motion.div>
 
       {/* OG Preview */}

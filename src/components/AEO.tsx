@@ -4,8 +4,11 @@ import { stagger, staggerItem } from "~src/lib/motion"
 import { useAuditStore } from "~src/store/auditStore"
 
 import Collapse from "./Collapse"
-import QuestionList from "./QuestionList"
+import FreshnessCard from "./FreshnessCard"
+import NumberedList from "./NumberedList"
 import SectionHeader from "./SectionHeader"
+import ServiceClarity from "./ServiceClarity"
+import StatRow from "./StatRow"
 import StatusPill from "./StatusPill"
 
 function BigStat({ label, value }: { label: string; value: number }) {
@@ -26,12 +29,15 @@ export default function AEO() {
 
   if (!audit) return null
 
+  const useCaseItems = audit.visibility.useCase.matches.map((m) => m.text)
+
   return (
     <motion.div
       variants={stagger}
       initial="initial"
       animate="animate"
       className="space-y-3.5">
+      {/* AEO hero */}
       <motion.div
         variants={staggerItem}
         className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
@@ -55,21 +61,75 @@ export default function AEO() {
         </div>
       </motion.div>
 
+      {/* Freshness */}
+      <motion.div variants={staggerItem}>
+        <FreshnessCard freshness={audit.visibility.freshness} />
+      </motion.div>
+
+      {/* Service Clarity */}
+      <motion.div variants={staggerItem}>
+        <ServiceClarity clarity={audit.visibility.serviceClarity} />
+      </motion.div>
+
+      {/* Use Case */}
+      <motion.div variants={staggerItem}>
+        <Collapse
+          title="Use Case Statements"
+          active={useCaseItems.length > 0}
+          count={useCaseItems.length}>
+          <NumberedList
+            items={useCaseItems}
+            emptyLabel="No clear audience statements detected"
+          />
+        </Collapse>
+      </motion.div>
+
+      {/* Citation signals */}
+      <motion.div
+        variants={staggerItem}
+        className="rounded-2xl border border-line bg-surface-raised p-4 shadow-card">
+        <SectionHeader
+          eyebrow="Citation Signals"
+          title="Trustworthiness"
+          subtitle="Cues AI systems weigh when citing a source"
+        />
+        <div className="mt-3 space-y-0">
+          <StatRow
+            label="Author declared"
+            value={!!audit.geo.CitationWortiness.AuthorName}
+          />
+          <StatRow
+            label="Published date"
+            value={!!audit.geo.CitationWortiness.PublishedDates}
+          />
+          <StatRow
+            label="Statistical data"
+            value={audit.geo.CitationWortiness.Statisticaldata}
+          />
+          <StatRow
+            label="Mentions research"
+            value={audit.geo.CitationWortiness.ResearchDate}
+          />
+        </div>
+      </motion.div>
+
+      {/* FAQ questions */}
       <motion.div variants={staggerItem}>
         <Collapse
           title="FAQ Questions"
           active={audit.aeo.faqQuestions.length > 0}
           count={audit.aeo.faqQuestions.length}>
-          <QuestionList items={audit.aeo.faqQuestions} />
+          <NumberedList items={audit.aeo.faqQuestions} />
         </Collapse>
       </motion.div>
 
+      {/* H2 questions */}
       <motion.div variants={staggerItem}>
         <Collapse
           title="Question H2s"
           active={audit.aeo.h2Questions.length > 0}
           count={audit.aeo.h2Questions.length}>
-          <QuestionList items={audit.aeo.h2Questions} />
+          <NumberedList items={audit.aeo.h2Questions} />
         </Collapse>
       </motion.div>
     </motion.div>
