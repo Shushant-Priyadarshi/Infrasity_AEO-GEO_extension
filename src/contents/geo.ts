@@ -1,3 +1,32 @@
+function looksLikeHTML(text: string): boolean {
+  const head = text.trimStart().slice(0, 256).toLowerCase()
+  return (
+    head.startsWith("<!doctype html") ||
+    head.startsWith("<html") ||
+    (head.includes("<head") && head.includes("<body"))
+  )
+}
+
+function isValidRobotsTxt(text: string): boolean {
+  if (!text || looksLikeHTML(text)) return false
+  return /(^|\n)\s*(user-agent|disallow|allow|sitemap)\s*:/i.test(text)
+}
+
+function isValidLlmsTxt(text: string): boolean {
+  if (!text || looksLikeHTML(text)) return false
+  return /^#\s+\S+/m.test(text) || text.length < 50_000
+}
+
+function isValidSitemapXml(text: string): boolean {
+  if (!text || looksLikeHTML(text)) return false
+  const head = text.trimStart().slice(0, 512).toLowerCase()
+  return (
+    head.startsWith("<?xml") ||
+    head.includes("<urlset") ||
+    head.includes("<sitemapindex")
+  )
+}
+
 export async function scanGeo(url: string) {
   const origin = new URL(url).origin
 
@@ -9,31 +38,38 @@ export async function scanGeo(url: string) {
   let sitemapExists = false
 
   try {
-    const robots = await fetch(
-      `${origin}/robots.txt`
-    )
-
-    robotsExists = robots.ok
-
-    robotsContent = await robots.text()
+    const expected = `${origin}/robots.txt`
+    const res = await fetch(expected)
+    if (res.ok && res.url.endsWith("/robots.txt")) {
+      const body = await res.text()
+      if (isValidRobotsTxt(body)) {
+        robotsExists = true
+        robotsContent = body
+      }
+    }
   } catch {}
 
   try {
-    const llms = await fetch(
-      `${origin}/llms.txt`
-    )
-
-    llmsExists = llms.ok
-
-    llmsContent = await llms.text()
+    const expected = `${origin}/llms.txt`
+    const res = await fetch(expected)
+    if (res.ok && res.url.endsWith("/llms.txt")) {
+      const body = await res.text()
+      if (isValidLlmsTxt(body)) {
+        llmsExists = true
+        llmsContent = body
+      }
+    }
   } catch {}
 
   try {
-    const sitemap = await fetch(
-      `${origin}/sitemap.xml`
-    )
-
-    sitemapExists = sitemap.ok
+    const expected = `${origin}/sitemap.xml`
+    const res = await fetch(expected)
+    if (res.ok && res.url.endsWith("/sitemap.xml")) {
+      const body = await res.text()
+      if (isValidSitemapXml(body)) {
+        sitemapExists = true
+      }
+    }
   } catch {}
 
   const bots =
