@@ -39,4 +39,10 @@ async function sendAudit() {
   })
 }
 
-sendAudit()
+chrome.runtime.onMessage.addListener(
+  async (message) => {
+    if (message.type === "RUN_AUDIT") {
+      await sendAudit()
+    }
+  }
+)

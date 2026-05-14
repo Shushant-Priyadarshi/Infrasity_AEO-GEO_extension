@@ -1,3 +1,6 @@
+import { FaRegCheckCircle } from "react-icons/fa"
+import { RxCrossCircled } from "react-icons/rx";
+
 export default function StatRow({
   label,
   value
@@ -5,24 +8,25 @@ export default function StatRow({
   label: string
   value: any
 }) {
-  const isBoolean = typeof value === "boolean"
+  const isBoolean =
+    typeof value === "boolean"
 
   return (
-    <div className="flex items-center justify-between py-3 border-b border-white/5 last:border-none">
-      <p className="text-sm text-zinc-400">
+    <div className="flex items-center justify-between py-4 border-b border-[#F0F0EB] last:border-none">
+      <p className="text-sm text-[#52524D]">
         {label}
       </p>
 
       {isBoolean ? (
-        <div
-          className={`h-2.5 w-2.5 rounded-full ${
-            value
-              ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
-              : "bg-zinc-600"
-          }`}
-        />
+        <div className="flex items-center">
+          {value ? (
+            <FaRegCheckCircle className="text-[18px] text-emerald-500" />
+          ) : (
+            <RxCrossCircled className="text-[18px] text-red-500" />
+          )}
+        </div>
       ) : (
-        <p className="text-sm font-medium text-white">
+        <p className="text-sm font-semibold text-[#111111]">
           {value}
         </p>
       )}

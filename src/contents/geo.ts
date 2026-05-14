@@ -1,17 +1,21 @@
 export async function scanGeo(url: string) {
   const origin = new URL(url).origin
 
-  let robotsText = ""
-  let llmsText = ""
+  let robotsContent = ""
+  let llmsContent = ""
 
-  let llmsTxtPresent = false
+  let robotsExists = false
+  let llmsExists = false
+  let sitemapExists = false
 
   try {
     const robots = await fetch(
       `${origin}/robots.txt`
     )
 
-    robotsText = await robots.text()
+    robotsExists = robots.ok
+
+    robotsContent = await robots.text()
   } catch {}
 
   try {
@@ -19,47 +23,65 @@ export async function scanGeo(url: string) {
       `${origin}/llms.txt`
     )
 
-    llmsText = await llms.text()
+    llmsExists = llms.ok
 
-    llmsTxtPresent = llms.ok
+    llmsContent = await llms.text()
   } catch {}
 
-  const aiCrawlerAccess = {
-    GPTBot:
-      robotsText.includes("GPTBot") &&
-      robotsText.includes("Allow: /"),
+  try {
+    const sitemap = await fetch(
+      `${origin}/sitemap.xml`
+    )
 
-    ClaudeBot:
-      robotsText.includes("ClaudeBot") &&
-      robotsText.includes("Allow: /"),
+    sitemapExists = sitemap.ok
+  } catch {}
 
-    GoogleExtended:
-      robotsText.includes("Google-Extended") &&
-      robotsText.includes("Allow: /"),
+  const bots =
+    robotsContent.match(
+      /User-agent:\s?(.*)/gi
+    ) || []
 
-    PerplexityBot:
-      robotsText.includes("PerplexityBot") &&
-      robotsText.includes("Allow: /"),
+  const bodyText =
+    document.body.innerText || ""
 
-    UserAgent:
-      robotsText.includes("User-agent: *")
-  }
+  return {
+    robotsTxt: {
+      exists: robotsExists,
+      content: robotsContent,
+      bots
+    },
 
-  const bodyText = document.body.innerText
+    llmsTxt: {
+      exists: llmsExists,
+      content: llmsContent
+    },
 
-  const statisticalData = /\d+%/.test(bodyText)
+    sitemapXml: {
+      exists: sitemapExists
+    },
 
-  const researchData =
-    bodyText.includes("research") ||
-    bodyText.includes("study") ||
-    bodyText.includes("survey") ||
-    bodyText.includes("benchmark")
+    aiCrawlerAccess: {
+      GPTBot:
+        robotsContent.includes("GPTBot"),
 
+      ClaudeBot:
+        robotsContent.includes("ClaudeBot"),
 
-    return {
-    aiCrawlerAccess,
+      GoogleExtended:
+        robotsContent.includes(
+          "Google-Extended"
+        ),
 
-    llmsTxtPresent,
+      PerplexityBot:
+        robotsContent.includes(
+          "PerplexityBot"
+        ),
+
+      UserAgent:
+        robotsContent.includes(
+          "User-agent: *"
+        )
+    },
 
     CitationWortiness: {
       AuthorName: "",
@@ -71,14 +93,37 @@ export async function scanGeo(url: string) {
           )
           ?.getAttribute("content") || "",
 
-      Statisticaldata: statisticalData,
+      Statisticaldata:
+        /\d+%/.test(bodyText),
 
-      ReserarchDate: researchData
+      ReserarchDate:
+        bodyText.includes("research") ||
+        bodyText.includes("study")
     },
 
     ContentExtractibilty: {
       h1Count:
         document.querySelectorAll("h1")
+          .length,
+
+      h2Count:
+        document.querySelectorAll("h2")
+          .length,
+
+      h3Count:
+        document.querySelectorAll("h3")
+          .length,
+
+      h4Count:
+        document.querySelectorAll("h4")
+          .length,
+
+      h5Count:
+        document.querySelectorAll("h5")
+          .length,
+
+      h6Count:
+        document.querySelectorAll("h6")
           .length,
 
       listCount:
@@ -87,6 +132,13 @@ export async function scanGeo(url: string) {
 
       tableCount:
         document.querySelectorAll("table")
+          .length,
+
+      wordCount:
+        bodyText.split(/\s+/).length,
+
+      domSize:
+        document.querySelectorAll("*")
           .length
     }
   }

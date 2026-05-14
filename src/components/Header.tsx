@@ -1,18 +1,24 @@
 export default function Header() {
   return (
-    <div className="px-5 py-4 border-b border-white/10 bg-[#070B14]">
+    <div className="px-5 py-5 border-b border-[#E7E7E2] bg-[#F7F8F5]">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[15px] font-semibold tracking-tight text-white">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#8A8A83] mb-2">
             Infrasity
-          </h1>
-
-          <p className="text-xs text-zinc-400 mt-1">
-            GEO + AEO Scanner
           </p>
+
+          <h1 className="text-[22px] leading-none font-semibold tracking-tight text-[#111111]">
+            GEO / AEO
+          </h1>
         </div>
 
-        <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+        <div className="flex items-center gap-2 rounded-full border border-[#E5E5DE] bg-white px-3 py-1.5 shadow-sm">
+          <div className="h-2 w-2 rounded-full bg-emerald-500" />
+
+          <p className="text-xs text-[#5F5F58] font-medium">
+            Live
+          </p>
+        </div>
       </div>
     </div>
   )

@@ -13,15 +13,29 @@ export function scanAEO() {
     `)
   )
 
-  const faqElements = headings.filter((el) =>
-    isQuestion(getText(el))
+  //faq
+ const faqElements = headings.filter((el) =>
+  isQuestion(getText(el))
+)
+
+const faqQuestions = faqElements.map((el) =>
+  getText(el)
+)
+
+const faqCount = faqQuestions.length
+
+
+//h2 question
+  const h2Questions = Array.from(
+  document.querySelectorAll("h2")
+)
+  .filter((h2) =>
+    isQuestion(getText(h2))
   )
+  .map((h2) => getText(h2))
 
-  const faqCount = faqElements.length
-
-  const questionH2Count = Array.from(
-    document.querySelectorAll("h2")
-  ).filter((h2) => isQuestion(getText(h2))).length
+const questionH2Count =
+  h2Questions.length
 
   let answerBlocks = 0
 
@@ -103,8 +117,11 @@ export function scanAEO() {
   })
 
   return {
-    faqCount,
-    questionH2Count,
+  faqCount,
+  questionH2Count,
+
+  faqQuestions,
+  h2Questions,
     clearValuePurpose,
     answerBlocks,
 
