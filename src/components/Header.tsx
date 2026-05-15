@@ -2,36 +2,7 @@ import { motion } from "framer-motion"
 
 import { useAuditStore } from "~src/store/auditStore"
 
-function LogoMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      className={className}
-      aria-hidden="true">
-      <rect
-        x="1"
-        y="1"
-        width="16"
-        height="16"
-        rx="4.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <rect
-        x="5"
-        y="5"
-        width="8"
-        height="8"
-        rx="2.25"
-        fill="currentColor"
-        opacity="0.92"
-      />
-    </svg>
-  )
-}
+import logo from "./logo.png"
 
 export default function Header() {
   const { audit } = useAuditStore()
@@ -49,12 +20,18 @@ export default function Header() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5 min-w-0">
           <span className="text-ink-900">
-            <LogoMark />
+            <img
+              className="w-20"
+             src={logo}
+              alt="Infrasity Logo"
+            />
           </span>
 
-          <span className="text-[12px] uppercase tracking-eyebrow font-semibold text-ink-900">
-            <a href="https://www.infrasity.com/" target="__blank">Infrasity</a>
-          </span>
+          {/* <span className="text-[12px] uppercase tracking-eyebrow font-semibold text-ink-900">
+            <a href="https://www.infrasity.com/" target="__blank">
+              Infrasity
+            </a>
+          </span> */}
 
           <span className="h-3 w-px bg-line-strong/70" aria-hidden />
 
