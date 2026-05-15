@@ -13,6 +13,7 @@ import Summary from "./components/Summary"
 import { swift } from "./lib/motion"
 import { useAuditStore } from "./store/auditStore"
 import { usePageStore } from "./store/pageStore"
+import Footer from "./components/Footer"
 
 const LOADER_STEPS = [
   "Reading metadata",
@@ -183,7 +184,10 @@ export default function Popup() {
             </motion.div>
           )}
         </AnimatePresence>
+
+     
       </div>
+         <Footer/>
     </div>
   )
 }

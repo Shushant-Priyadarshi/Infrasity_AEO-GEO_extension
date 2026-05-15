@@ -53,13 +53,13 @@ export default function Header() {
           </span>
 
           <span className="text-[12px] uppercase tracking-eyebrow font-semibold text-ink-900">
-            Infrasity
+            <a href="https://www.infrasity.com/" target="__blank">Infrasity</a>
           </span>
 
           <span className="h-3 w-px bg-line-strong/70" aria-hidden />
 
           <span className="text-[11.5px] uppercase tracking-eyebrow text-ink-400 font-medium">
-            GEO / AEO
+            GEO/AEO Checker
           </span>
         </div>
 
